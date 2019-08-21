@@ -1,0 +1,16 @@
+<template> 
+    <div class="blc"> 
+    <template if:true={record}>  
+      <lightning-layout vertical-align="center">  
+        <div style="cursor:pointer" key={record.Id} data-contact-id={record.Id} onclick={handleSelect}>  
+          <lightning-layout-item padding="around-small">  
+            {record.Name}{record.State_Name__c} <!--the var who have a value will be displayed-->
+          </lightning-layout-item>  
+        </div>  
+      </lightning-layout>  
+    </template>
+    </div>  
+    <template if:false={record}>  
+      <p>No contact data available.</p>  
+    </template>  
+</template>

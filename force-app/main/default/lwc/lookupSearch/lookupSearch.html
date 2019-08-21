@@ -1,0 +1,128 @@
+<template> 
+
+    <!--Principal bloc who will be in the account home page-->
+    <div class="slds-grid slds-grid_align-end">
+        <div class="slds-col slds-m-around_small selectoptions">  
+            <lightning-button variant="brand" label="Create address" title="Validate action" icon-name="standard:address" onclick={openPopup}></lightning-button>
+        </div>
+        <template if:true={popupopened} >
+            <c-popup-component onclosepop={closePopup} style="position: absolute"></c-popup-component>
+        </template>
+    </div>
+
+    <form  onsubmit={clickHandle}> 
+        <br/>
+        <div class="slds-grid slds-wrap">
+
+        <!--For the city name field-->
+        <div class="slds-col slds-m-around_xx-small selectoptions">  
+            <lightning-input class="slds-m-bottom_small" onfocus={focusField}  label="City name" value={selectedCityName} minlength="1" isloading=true onkeyup={handleKeyChangeCityName} autocomplete="off" required>  
+            </lightning-input>
+            <div class="slds-m-around_xxx-small">
+                <template if:true={showoptionsCityName}>  
+                    <template if:true={recordsCityName}>
+                        <div class="slds-box slds-m-around_xxx-small" style="position: absolute;margin-top:-12px;z-index: 10;background-color:#ffffff;">  
+                            <template for:each={recordsCityName} for:item="record">
+                                <template if:true={record}>  
+                                    <c-lookup-item-component  key={record.Id} record={record} onlookupselect={handlelookupselectCityName}>  
+                                    </c-lookup-item-component>  
+                                </template> 
+                            </template> 
+                        </div> 
+                    </template>  
+                  <!--template if:true={noRecordsFlag}>  
+                    <p>'{searchString}' in {label}s</p>  
+                  </template-->  
+                </template> 
+            </div>
+        </div>
+      
+        <!--For the state name field-->
+        <div class="slds-col slds-m-around_xx-small selectoptions">  
+            <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="State name" value={selectedStateName} minlength="1" isloading=true onkeyup={handleKeyChangeStateName} required>  
+            </lightning-input>
+            <div class="slds-m-around_xxx-small">
+                <template if:true={showoptionsStateName}>  
+                    <template if:true={recordsStateName}>
+                        <div class="slds-box slds-m-around_xxx-small" style="position: absolute;margin-top:-12px;z-index: 10;background-color:#ffffff;">  
+                            <template for:each={recordsStateName} for:item="record">
+                                <template if:true={record}>  
+                                    <c-lookup-item-component  key={record.Id} record={record} onlookupselect={handlelookupselectStateName}>  
+                                    </c-lookup-item-component>  
+                                </template> 
+                            </template> 
+                        </div> 
+                    </template>  
+                    <!--template if:true={noRecordsFlag}>  
+                        <p>'{searchString}' in {label}s</p>  
+                    </template-->  
+                 </template> 
+            </div>
+        </div>
+        </div>
+  
+        <div class="slds-grid slds-wrap">
+
+            <!--For the street name field-->
+            <div class="slds-col slds-size_6-of-12 slds-m-around_xx-small selectoptions">  
+                <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Street name" value={selectedStreetName} minlength="1" isloading=true onkeyup={handleKeyChangeStreetName} required>  
+                </lightning-input>
+                <div class="slds-m-around_xxx-small">
+                    <template if:true={showoptionsStreetName}>  
+                        <template if:true={recordsStreetName}>
+                            <div class="slds-box slds-m-around_xxx-small" style="position: absolute;margin-top:-12px;z-index: 10;background-color:#ffffff;">  
+                                <template for:each={recordsStreetName} for:item="record">
+                                    <template if:true={record}>  
+                                        <c-lookup-item-component  key={record.Id} record={record} onlookupselect={handlelookupselectStreetName}>  
+                                        </c-lookup-item-component>  
+                                    </template> 
+                                </template> 
+                            </div> 
+                        </template>  
+                        <!--template if:true={noRecordsFlag}>  
+                            <p>'{searchString}' in {label}s</p>  
+                        </template-->  
+                    </template> 
+                </div>
+            </div>
+
+            <!--For the street type field-->
+            <div class="slds-col slds-size_4-of-12  slds-m-around_xx-small selectoptions">  
+                <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Street type" minlength="1" isloading=true required>  
+                </lightning-input> 
+            </div>
+        </div>
+  
+        <div class="slds-grid slds-wrap">
+            <!--For the street number field-->
+            <div class="slds-col slds-size_3-of-12  slds-m-around_xx-small selectoptions">  
+                <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Street number"  minlength="1" maxlength="10" isloading=true required>  
+                </lightning-input>  
+            </div>
+
+            <!--For the zip code field-->
+            <div class="slds-col slds-size_5-of-12  slds-m-around_xx-small selectoptions">  
+                <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Zip code"  minlength="1" maxlength="6" isloading=true  required>  
+                </lightning-input>  
+            </div>
+            
+            <!--For the Even/Odd field-->
+            <div class="slds-col slds-size_3-of-12 slds-col slds-m-around_xx-small selectoptions">  
+                <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Even/Odd" minlength="1" maxlength="1" isloading=true  required>  
+                </lightning-input>
+            </div>
+        </div> 
+    
+        <div class="slds-grid slds-grid_align-end">
+            <!--This button will run the process of matching of entered datas with the existing datas-->
+            <div class="slds-col slds-m-around_small selectoptions">  
+                <lightning-button type="submit" variant="brand" label="Validate" title="Validate action" icon-name="standard:task" class=""></lightning-button>
+            </div>
+            
+            <div class="slds-col slds-m-around_small selectoptions">  
+                <lightning-button variant="base" label="Save" disabled={disabsave} title="Save action" icon-name="utility:download" class="" ></lightning-button>
+            </div>
+        </div> 
+   
+    </form>
+</template>

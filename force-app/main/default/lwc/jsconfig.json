@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "c/formTestComponent": [
+                "formTestComponent/formTestComponent.js"
+            ],
+            "c/lookupItemComponent": [
+                "lookupItemComponent/lookupItemComponent.js"
+            ],
+            "c/lookupSearch": [
+                "lookupSearch/lookupSearch.js"
+            ],
+            "c/popupComponent": [
+                "popupComponent/popupComponent.js"
+            ]
+        },
+        "experimentalDecorators": true
+    },
+    "include": [
+        "**/*",
+        "../../../../.sfdx/typings/lwc/**/*.d.ts"
+    ],
+    "typeAcquisition": {
+        "include": [
+            "jest"
+        ]
+    }
+}
