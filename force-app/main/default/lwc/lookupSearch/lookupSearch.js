@@ -19,6 +19,8 @@ import { LightningElement, track, api, wire} from 'lwc';
    @track selectedStreetName;
    @track selectedCityName;
    @track selectedStateName;  
+
+   @track optionsList=[{label:'strada',value:'STRADA'},{label:'piata',value:'PIATA'},{label:'intrarea',value:'INTRAREA'},{label:'aleea',value:'ALEEA'},{label:'strada',value:'STRADA'},{label:'piata',value:'PIATA'},{label:'intrarea',value:'INTRAREA'},{label:'aleea',value:'ALEEA'}];
    // API properties   
    @api recordlimit;  
    @api label;  
@@ -107,16 +109,13 @@ import { LightningElement, track, api, wire} from 'lwc';
     this.searchStateName = event.target.value;
   }  
 
-   errorCallback(){
-      // eslint-disable-next-line no-console
-      console.log("dsdsd");
-   }
 
-   clickHandle(event){
-     // eslint-disable-next-line no-console
-     console.log("dasdasdas");
-      event.preventDefault();
-    }
+  //method prevent(empeche) redirection when the form is submitted
+  clickHandle(event){
+    // eslint-disable-next-line no-console
+    console.log("dasdasdas");
+    event.preventDefault();
+  }
 
     //this methos display the popup who contains the create form
     openPopup(){

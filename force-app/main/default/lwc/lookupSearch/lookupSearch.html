@@ -87,16 +87,20 @@
             </div>
 
             <!--For the street type field-->
-            <div class="slds-col slds-size_4-of-12  slds-m-around_xx-small selectoptions">  
-                <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Street type" minlength="1" isloading=true required>  
-                </lightning-input> 
+            <div class="slds-col slds-size_5-of-12  slds-m-around_xx-small selectoptions">  
+                <lightning-combobox
+                                            style="z-index:9;"
+                                            onfocus={focusField}
+                                            label="Street type"
+                                            placeholder="Select street type"
+                                            options={optionsList} required></lightning-combobox>
             </div>
         </div>
   
         <div class="slds-grid slds-wrap">
             <!--For the street number field-->
             <div class="slds-col slds-size_3-of-12  slds-m-around_xx-small selectoptions">  
-                <lightning-input class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Street number"  minlength="1" maxlength="10" isloading=true required>  
+                <lightning-input type="number" class="slds-m-bottom_small" onfocus={focusField} autocomplete="off" label="Street number"  minlength="1" maxlength="10" isloading=true required>  
                 </lightning-input>  
             </div>
 
@@ -116,11 +120,11 @@
         <div class="slds-grid slds-grid_align-end">
             <!--This button will run the process of matching of entered datas with the existing datas-->
             <div class="slds-col slds-m-around_small selectoptions">  
-                <lightning-button type="submit" variant="brand" label="Validate" title="Validate action" icon-name="standard:task" class=""></lightning-button>
+                <lightning-button type="submit" variant="brand" label="Normalize" title="Validate action" icon-name="standard:task" class=""></lightning-button>
             </div>
             
             <div class="slds-col slds-m-around_small selectoptions">  
-                <lightning-button variant="base" label="Save" disabled={disabsave} title="Save action" icon-name="utility:download" class="" ></lightning-button>
+                <lightning-button variant="neutral" label="Save" disabled={disabsave} title="Save action" icon-name="utility:download" class="" ></lightning-button>
             </div>
         </div> 
    
