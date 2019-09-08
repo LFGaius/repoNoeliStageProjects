@@ -20,14 +20,12 @@ export default class PopupComponent extends LightningElement {
     @track selectedStateName;
     @track optionsList=[{label:'strada',value:'STRADA'},{label:'piata',value:'PIATA'},{label:'intrarea',value:'INTRAREA'},{label:'aleea',value:'ALEEA'},{label:'strada',value:'STRADA'},{label:'piata',value:'PIATA'},{label:'intrarea',value:'INTRAREA'},{label:'aleea',value:'ALEEA'}];  
     @track error;
-    @track success;
 
     // API properties   
     @api recordlimit=100;  
     @api label;
 
     @track haveError=false;
-    @track haveSuccess=false;
 
 
 
@@ -36,9 +34,13 @@ export default class PopupComponent extends LightningElement {
       
         
      if (data) {  
-       
-       this.recordsCityName = data;  
-       this.error = undefined; 
+       if(data.length>0){//if empty list
+        this.recordsCityName = data;  
+        this.error = undefined; 
+       }else{
+        this.recordsCityName = undefined; 
+        this.showoptionsCityName=false; 
+       }
        
      } else if (error) {  
        this.error = error;  
@@ -51,8 +53,13 @@ export default class PopupComponent extends LightningElement {
     wiredCitiesStateName({ error, data }) { 
        
      if (data) {
-       this.recordsStateName = data;  
-       this.error = undefined;   
+      if(data.length>0){//if empty list
+        this.recordsStateName = data;  
+        this.error = undefined; 
+       }else{
+        this.recordsStateName = undefined; 
+        this.showoptionsStateName=false; 
+       }   
      } else if (error) {  
        this.error = error;  
        this.recordsStateName = undefined; 
@@ -77,7 +84,6 @@ export default class PopupComponent extends LightningElement {
     handleKeyChangeCityName(event) {
         this.showoptionsCityName = true;  
         this.searchCityName = event.target.value;
-         
     }
     handleKeyChangeStateName(event) {
         this.showoptionsStateName = true;  
@@ -87,6 +93,7 @@ export default class PopupComponent extends LightningElement {
     //method prevent(empeche) redirection when the form is submitted
     clickHandle(event){
         
+        //let myform=this.template.querySelector('form');
         let l=this.template.querySelectorAll('.field');//list of different fields in the popup
         let valid=true;
         for(let i=0;i<l.length;i++){
@@ -99,26 +106,25 @@ export default class PopupComponent extends LightningElement {
         if(valid){
           
           insertAddress({cityName:l[0].value,stateName:l[1].value,streetName:l[2].value,streetType:l[3].value,streetNumber:l[4].value,zipCode:l[5].value,evenOdd:l[6].value})
-            .then(() => {
-                // eslint-disable-next-line no-console
-                console.log("good");
-                this.success="Address created!";
+            .then(() => {//insertion succeed
+                
                 this.error = undefined;
                 this.haveError=false;
-                this.haveSuccess=true;
-                this.template.querySelector('form').reset();
+                this.signalCreateSucceed();
             })
             .catch(error => {//we catch error if lifted
                 // eslint-disable-next-line no-console
                 console.log(JSON.stringify(error));
-                this.success=undefined;
                 this.error = error.body.message;//showing error message
                 this.haveError=true;
-                this.haveSuccess=false;
+               // if(myform.attachEvent){//eventually submit event
+                 // myform.attachEvent.stopPropagation();
+                //}
             });
         }
 
         event.preventDefault();
+        event.stopPropagation();//we stop the submit event propagation to prevent eventually unexpected and prevent the form to listen this current submition again
     }
 
     focusField(){//when any field get the focus suggestions of all fields ar'nt displayed
@@ -129,6 +135,12 @@ export default class PopupComponent extends LightningElement {
     signalPopupClosing(){
         const ev=new CustomEvent('closepop');
         this.dispatchEvent(ev);
+    }
+
+    signalCreateSucceed(){//signal that address creation has succeed
+      const ev=new CustomEvent('creationsucceed');
+
+      this.dispatchEvent(ev);
     }
 
 

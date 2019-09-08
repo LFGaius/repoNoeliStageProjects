@@ -7,7 +7,7 @@ public with sharing class manageRecordsController {
        query+= 'limit ' + recordLimit;  
        return Database.query(query);  
      }  
-     return null;  
+     return new List<Street__c>();  
    } 
 
    @AuraEnabled(cacheable=true)  
@@ -18,7 +18,7 @@ public with sharing class manageRecordsController {
        query+= ' limit ' + recordLimit;  
        return Database.query(query);  
      }  
-     return null;  
+     return new List<City__c>();  
    }
 
    @AuraEnabled(cacheable=true)  
@@ -30,7 +30,7 @@ public with sharing class manageRecordsController {
        query+= 'limit ' + recordLimit;  
        return Database.query(query);  
      }  
-     return null;  
+     return new List<City__c>();  
    } 
 
    

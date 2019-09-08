@@ -6,12 +6,11 @@
             <lightning-button variant="brand" label="Create address" title="Validate action" icon-name="standard:address" onclick={openPopup}></lightning-button>
         </div>
         <template if:true={popupopened} >
-            <c-popup-component onclosepop={closePopup} style="position: absolute"></c-popup-component>
+            <c-popup-component onclosepop={closePopup} oncreationsucceed={handleCreationSucceed} style="position: absolute"></c-popup-component>
         </template>
     </div>
 
     <form  onsubmit={clickHandle}> 
-        <br/>
         <div class="slds-grid slds-wrap">
 
         <!--For the city name field-->

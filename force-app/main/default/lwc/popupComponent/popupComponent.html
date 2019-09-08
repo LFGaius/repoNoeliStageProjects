@@ -2,8 +2,8 @@
     <div style="height:640px">
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
           <div class="slds-modal__container">
-            <header class="slds-modal__header">
-              <h2 id="modal-heading-01" class="slds-text-heading_medium ">Create Address</h2>
+            <header class="slds-modal__header" >
+                <lightning-icon icon-name="standard:address" ></lightning-icon><h2 id="modal-heading-01" class="slds-text-heading_medium ">Create Address</h2>
             </header>
             <form  onsubmit={clickHandle}>
               <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" style="overflow: visible;">
@@ -11,9 +11,6 @@
                     <span class="slds-text-heading_small slds-text-color_error slds-text-align_center">{error}</span>
                 </template>
 
-                <template if:true={haveSuccess}>
-                        <span class="slds-text-heading_small slds-text-color_success slds-text-align_center">{success}</span>
-                </template>
                 <div class="slds-grid slds-wrap">
 
                   <!--For the city name field-->

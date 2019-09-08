@@ -2,6 +2,7 @@ import { LightningElement, track, api, wire} from 'lwc';
  import getLookupSerachRecordsStreetName from '@salesforce/apex/manageRecordsController.getLookupSerachRecordsStreetName';  
  import getLookupSerachRecordsCityName from '@salesforce/apex/manageRecordsController.getLookupSerachRecordsCityName';  
  import getLookupSerachRecordsStateName from '@salesforce/apex/manageRecordsController.getLookupSerachRecordsStateName';  
+ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
  
  export default class CompositionContactSearch extends LightningElement {  
    // Tracked properties  
@@ -34,8 +35,13 @@ import { LightningElement, track, api, wire} from 'lwc';
      
      //this.noRecordsFlag = 0;  
      if (data) {  
-       this.recordsStreetName = data;  
-       this.error = undefined;  
+      if(data.length>0){//if empty list
+        this.recordsStreetName = data;  
+        this.error = undefined; 
+       }else{
+        this.recordsStreetName = undefined; 
+        this.showoptionsStreetName=false; 
+       } 
        //this.noRecordsFlag = this.records.length === 0 ? true : false;  
      } else if (error) {  
        this.error = error;  
@@ -49,9 +55,13 @@ import { LightningElement, track, api, wire} from 'lwc';
      
      //this.noRecordsFlag = 0;  
      if (data) {  
-       
-       this.recordsCityName = data;  
-       this.error = undefined;  
+      if(data.length>0){//if empty list
+        this.recordsCityName = data;  
+        this.error = undefined; 
+       }else{
+        this.recordsCityName = undefined; 
+        this.showoptionsCityName=false; 
+       } 
        //this.noRecordsFlag = this.records.length === 0 ? true : false;  
      } else if (error) {  
        this.error = error;  
@@ -65,8 +75,13 @@ import { LightningElement, track, api, wire} from 'lwc';
      
      //this.noRecordsFlag = 0;  
      if (data) {
-       this.recordsStateName = data;  
-       this.error = undefined;  
+      if(data.length>0){//if empty list
+        this.recordsStateName = data;  
+        this.error = undefined; 
+       }else{
+        this.recordsStateName = undefined; 
+        this.showoptionsStateName=false; 
+       }  
        //this.noRecordsFlag = this.records.length === 0 ? true : false;  
      } else if (error) {  
        this.error = error;  
@@ -96,17 +111,17 @@ import { LightningElement, track, api, wire} from 'lwc';
    handleKeyChangeStreetName(event) {
      
      this.showoptionsStreetName = true;  
-     this.searchStreetName = event.target.value;
+     this.searchStreetName = event.target.value || ''; //if event.detail.Name if undefined, we put empty character;
    }
    handleKeyChangeCityName(event) {
      
     this.showoptionsCityName = true;  
-    this.searchCityName = event.target.value;
+    this.searchCityName = event.target.value || ''; //if event.detail.Name if undefined, we put empty character;
   }
   handleKeyChangeStateName(event) {
      
     this.showoptionsStateName = true;  
-    this.searchStateName = event.target.value;
+    this.searchStateName = event.target.value || ''; //if event.detail.Name if undefined, we put empty character;
   }  
 
 
@@ -132,5 +147,16 @@ import { LightningElement, track, api, wire} from 'lwc';
         this.showoptionsCityName=false;
         this.showoptionsStateName=false;
         this.showoptionsStreetName=false;
+    }
+
+    handleCreationSucceed(){
+      this.closePopup();
+      const toastEvent=new ShowToastEvent({
+        title:'Good job!',
+        message:'The address has been successfully inserted!',
+        variant:'success'
+      });
+
+      this.dispatchEvent(toastEvent);
     }
  }
